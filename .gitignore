@@ -1,17 +1,6 @@
 
 # Projcet固有
+.DS_Store
+Thumbs.db
+.env
 
-*.log
-__pycache__/
-
-releases/
-
-cc.ja.300.vec.gz
-*.vec
-model.bin
-small_model.vec.gz
-big_model.vec
-model.vec
-.conda/
-.vscode/
-.DS_Store/
