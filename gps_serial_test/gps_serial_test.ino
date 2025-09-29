@@ -36,6 +36,10 @@ void printGpsInfo() {
   }
 
   Serial.printf("Satellites: %u\n", gps.satellites.isValid() ? gps.satellites.value() : 0);
+  Serial.printf("Stats: chars=%lu sentences_with_fix=%lu failed_checksum=%lu\n",
+                static_cast<unsigned long>(gps.charsProcessed()),
+                static_cast<unsigned long>(gps.sentencesWithFix()),
+                static_cast<unsigned long>(gps.failedChecksum()));
   Serial.println();
 }
 
@@ -52,7 +56,12 @@ void setup() {
 
 void loop() {
   while (SerialGPS.available() > 0) {
-    gps.encode(SerialGPS.read());
+    char c = static_cast<char>(SerialGPS.read());
+    Serial.write(c);  // 生データをそのまま表示して NMEA/UBX を確認
+    if (c == '\n') {
+      Serial.flush();
+    }
+    gps.encode(c);
   }
 
   static uint32_t lastPrint = 0;
