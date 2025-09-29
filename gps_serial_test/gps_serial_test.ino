@@ -4,7 +4,7 @@ HardwareSerial SerialGPS(1);
 
 static const int GPS_RX_PIN = 1;   // Grove white wire -> GPS TX
 static const int GPS_TX_PIN = 2;   // Grove yellow wire -> GPS RX (optional)
-static const uint32_t GPS_BAUD = 9600;
+static const uint32_t GPS_BAUD = 115200;
 
 TinyGPSPlus gps;
 
@@ -52,9 +52,7 @@ void setup() {
 
 void loop() {
   while (SerialGPS.available() > 0) {
-    char c = static_cast<char>(SerialGPS.read());
-    Serial.printf("Serial=%d", c);
-    gps.encode(c);
+    gps.encode(SerialGPS.read());
   }
 
   static uint32_t lastPrint = 0;
